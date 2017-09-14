@@ -1,0 +1,51 @@
+<idea-plugin>
+    
+    <id>org.jga.intellij.plugin.git.decorator</id>
+    <name>IntelliJ git decorator</name>
+    <version>1.0</version>
+    <vendor email="tpm@tpm.tpm" url="http://tpm.tpm.tpm">tpm</vendor>
+
+    <description><![CDATA[
+      IntelliJ git project tree decorator.
+    ]]></description>
+
+    <change-notes><![CDATA[
+        Add change notes here.<br>
+        <em>most HTML tags may be used</em>
+    ]]>
+    </change-notes>
+
+    <idea-version since-build="171"/>
+
+    <depends>Git4Idea</depends>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectViewNodeDecorator implementation="org.jga.intellij.plugin.git.decorator.GitDecoratorNode"/>
+        <!--<itemPresentationProvider
+        <directoryProjectGenerator-->
+    </extensions>
+
+    <project-components>
+        <component>
+            <implementation-class>org.jga.intellij.plugin.git.decorator.GitDecoratorProject</implementation-class>
+        </component>
+    </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="org.jga.intellij.plugin.git.decorator.GitDecoratorConfig"/>
+    </extensions>
+
+    <actions>
+        <group id="org.jga.intellij.plugin.git.decorator.action.group" text="GitDecorator" description="GitDecorator Actions" popup="true">
+            <action 
+                    id="org.jga.intellij.plugin.git.decorator.action.enable" 
+                    class="org.jga.intellij.plugin.git.decorator.GitDecoratorAction" 
+                    text="Enabled" 
+                    description="Enable GitDecorator Action" 
+            />
+            <add-to-group group-id="Git.Menu" anchor="last"/>
+        </group>
+    </actions>
+
+</idea-plugin>
