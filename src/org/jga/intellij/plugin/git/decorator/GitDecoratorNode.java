@@ -46,7 +46,7 @@ public class GitDecoratorNode implements ProjectViewNodeDecorator {
     private static final int SMALL_ITALIC_STYLE = SimpleTextAttributes.STYLE_SMALLER + SimpleTextAttributes.STYLE_ITALIC;
     private static final SimpleTextAttributes NORMAL_ATTR = SimpleTextAttributes.REGULAR_ATTRIBUTES;
     private static final SimpleTextAttributes RED_SMALL_ITALIC_ATTR = new SimpleTextAttributes(SMALL_ITALIC_STYLE, JBColor.RED);
-    private static final SimpleTextAttributes GRAY_SMALL_ITALIC_ATTR = new SimpleTextAttributes(SMALL_ITALIC_STYLE, JBColor.LIGHT_GRAY);
+    private static final SimpleTextAttributes SMALL_ITALIC_ATTR = new SimpleTextAttributes(SMALL_ITALIC_STYLE, (Color)null);
 
     private GitDecoratorConfig gitDecoratorConfig;
     
@@ -96,7 +96,7 @@ public class GitDecoratorNode implements ProjectViewNodeDecorator {
                             nodePresentation,
                             gitRepository.isOnBranch() ? gitRepository.getCurrentBranch().getName() : NO_BRANCH,
                             gitRepository.getInfo().getState() == Repository.State.NORMAL ? null : gitRepository.getInfo().getState().toString(),
-                            gitRepository.getCurrentRevision().substring(0, 9)
+                            gitRepository.getCurrentRevision() != null ? gitRepository.getCurrentRevision().substring(0, 9) : "NO COMMIT"
                     );
                 }
             } else {
@@ -175,7 +175,7 @@ public class GitDecoratorNode implements ProjectViewNodeDecorator {
         if (repoState != null) {
             this.decorateNode(nodePresentation, OPEN_BRACKET + repoState + CLOSE_BRACKET, RED_SMALL_ITALIC_ATTR);
         }
-        this.decorateNode(nodePresentation, OPEN_BRACKET + repoRev + CLOSE_BRACKET, GRAY_SMALL_ITALIC_ATTR);
+        this.decorateNode(nodePresentation, OPEN_BRACKET + repoRev + CLOSE_BRACKET, SMALL_ITALIC_ATTR);
     }
 
     private void decorateNode(PresentationData nodePresentation, String text, int style, Color color) {
