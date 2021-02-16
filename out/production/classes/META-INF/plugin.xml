@@ -27,13 +27,26 @@
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <postStartupActivity implementation="org.jga.intellij.plugin.git.decorator.GitDecoratorStart"/>
-    </extensions>
+    <!--project-components>
+        <component>
+            <implementation-class>org.jga.intellij.plugin.git.decorator.GitDecoratorProject</implementation-class>
+        </component>
+    </project-components-->
 
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="org.jga.intellij.plugin.git.decorator.GitDecoratorService"/>
     </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="org.jga.intellij.plugin.git.decorator.GitDecoratorStart"/>
+    </extensions>
+
+    <!--applicationListeners>
+        <listener
+                class="org.jga.intellij.plugin.git.decorator.GitDecoratorListener"
+                topic="com.intellij.openapi.project.ProjectManagerListener"
+        />
+    </applicationListeners-->
 
     <extensions defaultExtensionNs="com.intellij">
         <projectViewNodeDecorator implementation="org.jga.intellij.plugin.git.decorator.GitDecoratorNode"/>

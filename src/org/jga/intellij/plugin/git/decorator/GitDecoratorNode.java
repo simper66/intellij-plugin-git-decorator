@@ -70,7 +70,7 @@ public class GitDecoratorNode implements ProjectViewNodeDecorator {
             this.gitDecoratorConfig = GitDecoratorConfig.getInstance(node.getProject());
             if (this.gitDecoratorConfig==null) return;
         }
-        if (!this.gitDecoratorConfig.isGitDecoratorEnabled) return;
+        if (!this.gitDecoratorConfig.getState().isGitDecoratorEnabled) return;
 
         if (this.changeListManager==null) {
             this.changeListManager = ChangeListManager.getInstance(node.getProject());

@@ -2,7 +2,6 @@ package org.jga.intellij.plugin.git.decorator;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;
-import org.jetbrains.annotations.NotNull;
 
 public class GitDecoratorAction extends ToggleAction {
 
@@ -12,19 +11,20 @@ public class GitDecoratorAction extends ToggleAction {
 
     @Override
     public boolean isSelected(AnActionEvent e) {
-        return e.getProject() != null && GitDecoratorConfig.getInstance(e.getProject()).isGitDecoratorEnabled;
+        return e.getProject() != null && GitDecoratorConfig.getInstance(e.getProject()).getState().isGitDecoratorEnabled;
     }
 
     @Override
     public void setSelected(AnActionEvent e, boolean state) {
-        if (e.getProject() != null) {
-            GitDecoratorConfig.getInstance(e.getProject()).isGitDecoratorEnabled = state;
-            e.getProject().getMessageBus().syncPublisher(GitDecoratorEnableToggleNotifier.TOGGLE_TOPIC).decorationChanged(state);
+        GitDecoratorConfig.getInstance(e.getProject()).getState().isGitDecoratorEnabled = state;
+        if (e.getProject() != null && state) {
+            GitDecoratorService.getInstance(e.getProject()).startRefreshWorker();
         }
+        GitDecoratorService.getInstance(e.getProject()).stopRefreshWorker();
     }
 
     @Override
-    public void update(@NotNull AnActionEvent e) {
+    public void update(AnActionEvent e) {
         e.getPresentation().setEnabled(e.getProject()!=null);
         super.update(e);
     }
